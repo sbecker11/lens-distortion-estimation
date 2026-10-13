@@ -1,5 +1,7 @@
 # Lens Distortion Estimation
 
+<img src="media/gallery.lines.distorted.png" height="216" alt="Gallery photograph before lens-distortion correction. Photograph by Steve Mann."> <img src="media/gallery.lines.undistorted.png" height="216" alt="Gallery photograph after lens-distortion correction">
+
 <!-- SUMMARY:START generated from workspace-linkedin-profile/Projects.json by scripts/build_readme_header.py; edit there -->
 Semiautomatic camera lens calibration from partially known structure, MIT Media Lab. Line segments in a fisheye photograph are mapped from the center of projection to points and variances on a Gaussian sphere. Gradient descent finds the three radial (K1, K2, K3) and two decentering (P1, P2) distortion terms that minimize the variance of the focal points, so curved edges become straight and each set of parallel lines meets at one vanishing point. Pixels of the corrected image are sampled stochastically from regions of the distorted image. Photographs by Steve Mann (https://en.wikipedia.org/wiki/Steve_Mann_(inventor)).
 
