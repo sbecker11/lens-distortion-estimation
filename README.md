@@ -1,5 +1,13 @@
 # Lens Distortion Estimation
 
+<!-- SUMMARY:START generated from workspace-linkedin-profile/Projects.json by scripts/build_readme_header.py; edit there -->
+Semiautomatic camera lens calibration from partially known structure, MIT Media Lab. Line segments in a fisheye photograph are mapped from the center of projection to points and variances on a Gaussian sphere. Gradient descent finds the three radial (K1, K2, K3) and two decentering (P1, P2) distortion terms that minimize the variance of the focal points, so curved edges become straight and each set of parallel lines meets at one vanishing point. Pixels of the corrected image are sampled stochastically from regions of the distorted image. Photographs by Steve Mann (https://en.wikipedia.org/wiki/Steve_Mann_(inventor)).
+
+**Page:** [http://alumni.media.mit.edu/~sbeck/results/Distortion/distortion.html](http://alumni.media.mit.edu/~sbeck/results/Distortion/distortion.html)
+
+**Skills:** Computer Vision · Camera Calibration · Lens Distortion Modeling · Projective Geometry · Gaussian Sphere Vanishing Points · Gradient Descent Optimization · Stochastic Image Resampling · Algorithms · Computer Graphics · Statistical Data Analysis · Automated Software Testing (JUnit/Jest/Vitest/PyTest)
+<!-- SUMMARY:END -->
+
 Semiautomatic camera lens calibration from partially known structure, MIT Media Lab (1997). The calibration estimates three radial terms (K1, K2, K3) and two decentering terms (P1, P2). Curved images of straight edges become straight, and parallel lines meet at one vanishing point.
 
 Page: http://alumni.media.mit.edu/~sbeck/results/Distortion/distortion.html
@@ -25,7 +33,7 @@ y' = y + y*(K1*r^2 + K2*r^4 + K3*r^6) + P2*(r^2 + 2*y^2) + 2*P1*x*y
 
 K1, K2, and K3 are radial. P1 and P2 are decentering.
 
-## Gaussian segment points and focal point variances before correction
+## Focal points before correction
 
 Each image segment is mapped from the center of projection onto the Gaussian sphere. Red, green, and blue are the three scene directions. The circle of each color is that direction's focal point, and the spread of the same-colored points is its variance.
 
@@ -47,7 +55,7 @@ P1: -8.448460E-03
 P2: -7.356744E-03
 ```
 
-## Gaussian segment points and focal point variances after correction
+## Focal points after correction
 
 With those parameters applied, the red, green, and blue points draw into tighter arcs. The variance around each focal point is smaller, and each focal point lies on the great circle for its scene direction.
 
