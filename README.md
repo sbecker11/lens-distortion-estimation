@@ -12,7 +12,7 @@ Fisheye photograph of the gallery before correction. Line segments are grouped i
 
 Photograph by [Steve Mann](https://en.wikipedia.org/wiki/Steve_Mann_(inventor)).
 
-![Gallery photograph before lens-distortion correction. Photograph by Steve Mann.](media/gallery.lines.distorted.png)
+<img src="media/gallery.lines.distorted.png" width="318" alt="Gallery photograph before lens-distortion correction. Photograph by Steve Mann.">
 
 ## Calibration
 
@@ -25,7 +25,7 @@ y' = y + y*(K1*r^2 + K2*r^4 + K3*r^6) + P2*(r^2 + 2*y^2) + 2*P1*x*y
 
 K1, K2, and K3 are radial. P1 and P2 are decentering.
 
-## Focal points before correction
+## Gaussian segment points and focal point variances before correction
 
 Each image segment is mapped from the center of projection onto the Gaussian sphere. Red, green, and blue are the three scene directions. The circle of each color is that direction's focal point, and the spread of the same-colored points is its variance.
 
@@ -47,7 +47,7 @@ P1: -8.448460E-03
 P2: -7.356744E-03
 ```
 
-## Focal points after correction
+## Gaussian segment points and focal point variances after correction
 
 With those parameters applied, the red, green, and blue points draw into tighter arcs. The variance around each focal point is smaller, and each focal point lies on the great circle for its scene direction.
 
@@ -57,10 +57,10 @@ With those parameters applied, the red, green, and blue points draw into tighter
 
 The same gallery photograph after the estimated distortion is removed. Edges that were curved are straight, and each set of parallel lines meets at one vanishing point.
 
-![Gallery photograph after lens-distortion correction](media/gallery.lines.undistorted.png)
+<img src="media/gallery.lines.undistorted.png" width="640" alt="Gallery photograph after lens-distortion correction">
 
 ## Stochastic texture unwarping
 
-Pixels of the corrected image are sampled from regions of the distorted image. Figure 4-4 of the dissertation: a pixel region in the undistorted image (a) is given the average of stochastically sampled intensities in a region of the distorted image (b).
+Pixels of the corrected image are sampled from regions of the distorted image (dissertation Figure 4-4).
 
-![Figure 4-4. Stochastic texture unwarping](media/stochastic-texture-unwarping.jpg)
+![Stochastic texture unwarping](media/stochastic-texture-unwarping.jpeg)
