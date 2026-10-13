@@ -63,4 +63,4 @@ The same gallery photograph after the estimated distortion is removed. Edges tha
 
 Pixels of the corrected image are sampled from regions of the distorted image. Figure 4-4 of the dissertation: a pixel region in the undistorted image (a) is given the average of stochastically sampled intensities in a region of the distorted image (b).
 
-![Figure 4-4. Stochastic texture unwarping](media/stochastic-texture-unwarping.png)
+![Figure 4-4. Stochastic texture unwarping](media/stochastic-texture-unwarping-dark.jpg)
