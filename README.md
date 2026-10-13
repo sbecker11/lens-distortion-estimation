@@ -58,3 +58,9 @@ With those parameters applied, the red, green, and blue points draw into tighter
 The same gallery photograph after the estimated distortion is removed. Edges that were curved are straight, and each set of parallel lines meets at one vanishing point.
 
 ![Gallery photograph after lens-distortion correction](media/gallery.lines.undistorted.png)
+
+## Stochastic texture unwarping
+
+Pixels of the corrected image are sampled from regions of the distorted image. Figure 4-4 of the dissertation: a pixel region in the undistorted image (a) is given the average of stochastically sampled intensities in a region of the distorted image (b).
+
+![Figure 4-4. Stochastic texture unwarping](media/stochastic-texture-unwarping.png)
