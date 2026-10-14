@@ -5,14 +5,10 @@
 <!-- SUMMARY:START generated from workspace-linkedin-profile/Projects.json by scripts/build_readme_header.py; edit there -->
 Semiautomatic camera lens calibration from partially known structure, MIT Media Lab. Line segments in a fisheye photograph are mapped from the center of projection to points and variances on a Gaussian sphere. Gradient descent finds the three radial (K1, K2, K3) and two decentering (P1, P2) distortion terms that minimize the variance of the focal points, so curved edges become straight and each set of parallel lines meets at one vanishing point. Pixels of the corrected image are sampled stochastically from regions of the distorted image. Photographs by Steve Mann (https://en.wikipedia.org/wiki/Steve_Mann_(inventor)).
 
-**Page:** [http://alumni.media.mit.edu/~sbeck/results/Distortion/distortion.html](http://alumni.media.mit.edu/~sbeck/results/Distortion/distortion.html)
+**Web page:** [http://alumni.media.mit.edu/~sbeck/results/Distortion/distortion.html](http://alumni.media.mit.edu/~sbeck/results/Distortion/distortion.html)
 
 **Skills:** Computer Vision · Camera Calibration · Lens Distortion Modeling · Projective Geometry · Gaussian Sphere Vanishing Points · Gradient Descent Optimization · Stochastic Image Resampling · Algorithms · Computer Graphics · Statistical Data Analysis · Automated Software Testing (JUnit/Jest/Vitest/PyTest)
 <!-- SUMMARY:END -->
-
-Semiautomatic camera lens calibration from partially known structure, MIT Media Lab (1997). The calibration estimates three radial terms (K1, K2, K3) and two decentering terms (P1, P2). Curved images of straight edges become straight, and parallel lines meet at one vanishing point.
-
-Page: http://alumni.media.mit.edu/~sbeck/results/Distortion/distortion.html
 
 Dissertation: [Vision-assisted modeling for model-based video representations](https://dspace.mit.edu/entities/publication/a7a25f27-ed04-463d-97a4-eeada43179fd), Shawn C. Becker, MIT, February 1997.
 
