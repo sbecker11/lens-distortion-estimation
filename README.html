@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lens Distortion Estimation</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+<style>
+body { max-width: 52rem; }
+img { max-width: 100%; height: auto; }
+</style>
+</head>
+<body>
+<header id="title-block-header">
+</header>
+<h1 id="lens-distortion-estimation">Lens Distortion Estimation</h1>
+<p><img src="media/gallery.lines.distorted.png" height="216" alt="Gallery photograph before lens-distortion correction. Photograph by Steve Mann.">
+<img src="media/gallery.lines.undistorted.png" height="216" alt="Gallery photograph after lens-distortion correction"></p>
+<!-- SUMMARY:START generated from workspace-linkedin-profile/Projects.json by scripts/build_readme_header.py; edit there -->
+
+<p>Semiautomatic camera lens calibration from partially known structure,
+MIT Media Lab. Line segments in a fisheye photograph are mapped from the
+center of projection to points and variances on a Gaussian sphere.
+Gradient descent finds the three radial (K1, K2, K3) and two decentering
+(P1, P2) distortion terms that minimize the variance of the focal
+points, so curved edges become straight and each set of parallel lines
+meets at one vanishing point. Pixels of the corrected image are sampled
+stochastically from regions of the distorted image. Photographs by Steve
+Mann (<a
+href="https://en.wikipedia.org/wiki/Steve_Mann_(inventor)">https://en.wikipedia.org/wiki/Steve_Mann_(inventor)</a>).</p>
+<p><strong>Web page:</strong> <a
+href="http://alumni.media.mit.edu/~sbeck/results/Distortion/distortion.html"><span>http://alumni.media.mit.edu/~sbeck/results/Distortion/distortion.html</span></a></p>
+<p><strong>Skills:</strong> Computer Vision · Camera Calibration · Lens
+Distortion Modeling · Projective Geometry · Gaussian Sphere Vanishing
+Points · Gradient Descent Optimization · Stochastic Image Resampling ·
+Algorithms · Computer Graphics · Statistical Data Analysis · Automated
+Software Testing (JUnit/Jest/Vitest/PyTest)</p>
+<!-- SUMMARY:END -->
+
+<p>Dissertation: <a
+href="https://dspace.mit.edu/entities/publication/a7a25f27-ed04-463d-97a4-eeada43179fd">Vision-assisted
+modeling for model-based video representations</a>, Shawn C. Becker,
+MIT, February 1997.</p>
+<h2 id="distorted-photograph">Distorted photograph</h2>
+<p>Fisheye photograph of the gallery before correction. Line segments
+are grouped into three scene directions.</p>
+<p>Photograph by <a
+href="https://en.wikipedia.org/wiki/Steve_Mann_(inventor)">Steve
+Mann</a>.</p>
+<img src="media/gallery.lines.distorted.png" width="318" alt="Gallery photograph before lens-distortion correction. Photograph by Steve Mann.">
+
+<h2 id="calibration">Calibration</h2>
+<p>For a point <code>(x, y)</code> at radius <code>r</code> from the
+image center, the distorted point <code>(x', y')</code> is</p>
+<pre><code>x&#39; = x + x*(K1*r^2 + K2*r^4 + K3*r^6) + P1*(r^2 + 2*x^2) + 2*P2*x*y
+y&#39; = y + y*(K1*r^2 + K2*r^4 + K3*r^6) + P2*(r^2 + 2*y^2) + 2*P1*x*y</code></pre>
+<p>K1, K2, and K3 are radial. P1 and P2 are decentering.</p>
+<h2 id="focal-points-before-correction">Focal points before
+correction</h2>
+<p>Each image segment is mapped from the center of projection onto the
+Gaussian sphere. Red, green, and blue are the three scene directions.
+The circle of each color is that direction's focal point, and the spread
+of the same-colored points is its variance.</p>
+<p>Before correction the points of each color are widely dispersed. The
+red focal point lies toward the bottom of the sphere, the green focal
+point toward the right, and the blue focal point toward the top.</p>
+<p><img src="media/gallery.sphere.distorted.gif"
+alt="Gaussian sphere before correction, with dispersed red, green, and blue focal points" /></p>
+<h2 id="computed-distortion-parameters">Computed distortion
+parameters</h2>
+<p>The center of projection and the endpoints of each image segment are
+mapped to points and variances on the Gaussian sphere. Those
+variance-weighted points are normalized to compute a new position and a
+new variance for each vanishing point on the sphere. Gradient descent
+finds the distortion parameters that minimize the variance of the focal
+points on the Gaussian sphere.</p>
+<p>For this gallery photograph the estimated parameters are</p>
+<pre><code>K1:  1.105763E-01
+K2:  1.886214E-02
+K3:  1.473832E-02
+P1: -8.448460E-03
+P2: -7.356744E-03</code></pre>
+<h2 id="focal-points-after-correction">Focal points after
+correction</h2>
+<p>With those parameters applied, the red, green, and blue points draw
+into tighter arcs. The variance around each focal point is smaller, and
+each focal point lies on the great circle for its scene direction.</p>
+<p><img src="media/gallery.sphere.undistorted.gif"
+alt="Gaussian sphere after correction, with tighter red, green, and blue focal points" /></p>
+<h2 id="corrected-photograph">Corrected photograph</h2>
+<p>The same gallery photograph after the estimated distortion is
+removed. Edges that were curved are straight, and each set of parallel
+lines meets at one vanishing point.</p>
+<img src="media/gallery.lines.undistorted.png" width="640" alt="Gallery photograph after lens-distortion correction">
+
+<h2 id="stochastic-texture-unwarping">Stochastic texture unwarping</h2>
+<p>Pixels of the corrected image are sampled from regions of the
+distorted image (dissertation Figure 4-4).</p>
+<p><img src="media/stochastic-texture-unwarping.jpeg"
+alt="Stochastic texture unwarping" /></p>
+</body>
+</html>
